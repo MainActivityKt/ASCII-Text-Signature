@@ -1,7 +1,9 @@
 package signature
 
-import utils.Font
+import utils.Letter
 import utils.Symbol.*
+import utils.TWO_SPACES
+import utils.getInput
 import java.util.Scanner
 
 enum class Row {
@@ -9,29 +11,25 @@ enum class Row {
 }
 
 private const val MID_SPACE_SIZE = 6
-private const val TWO_SPACES = "  "
-
 
 class TextDecorator(private val name: String, private val title: String) {
     private val firstName = name.split(' ').first()
     private val lastName = name.split(' ').last()
 
     private var decoratedNameLength: Int = 0
-    private var lineLength = calculateWidth()
+    private var lineLength = calculateLength()
     private val midIndex =
         (lineLength - (if (name.length > title.length) title.length else decoratedNameLength)) / 2
 
-
     fun decorateText(): String {
-        return StringBuilder().apply {
+        return buildString {
             appendLine(getDecorators())
             appendLine(decorateRow(Row.TOP))
             appendLine(decorateRow(Row.MIDDLE))
             appendLine(decorateRow(Row.BOTTOM))
             appendLine(getTitleRow())
             appendLine(getDecorators())
-        }.toString()
-
+        }
     }
 
     private fun decorateRow(row: Row): StringBuilder {
@@ -64,9 +62,8 @@ class TextDecorator(private val name: String, private val title: String) {
         return str
     }
 
-
     private fun getLetter(char: Char, row: Row): String {
-        return Font.valueOf(char.toString()).structure.get(
+        return Letter.valueOf(char.toString()).structure.get(
             when (row) {
                 Row.TOP -> 0
                 Row.MIDDLE -> 1
@@ -92,8 +89,7 @@ class TextDecorator(private val name: String, private val title: String) {
         }
     }
 
-
-    private fun calculateWidth(): Int {
+    private fun calculateLength(): Int {
         name.forEach {
             decoratedNameLength += when (it) {
                 'I' -> 1
@@ -107,16 +103,9 @@ class TextDecorator(private val name: String, private val title: String) {
         val spaces = firstName.length - 1 + lastName.length - 1
         decoratedNameLength += spaces
 
-
         return (if (name.length > title.length) decoratedNameLength else title.length) +
                 (TWO_SPACES.length * 2) + (STAR.value.length * 2)
     }
-}
-
-
-fun getInput(sc: Scanner, message: String): String {
-    print("$message: ")
-    return sc.nextLine()
 }
 
 fun main() {
@@ -124,5 +113,4 @@ fun main() {
     val fullName = getInput(sc, "Enter name and surname").uppercase()
     val title = getInput(sc, "Enter person's status")
     println(TextDecorator(fullName, title).decorateText())
-
 }
