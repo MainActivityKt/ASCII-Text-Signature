@@ -1,10 +1,7 @@
 package signature
 
+import utils.Symbol
 import java.util.Scanner
-
-enum class Symbol(val value: String) {
-    SPACE(" "), STAR("*")
-}
 
 fun stylizeName(name: String): String {
     val stars = "*".repeat(name.length + 4)
