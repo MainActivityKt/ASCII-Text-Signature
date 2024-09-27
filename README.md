@@ -19,7 +19,7 @@ Stage implementation: [SimpleText.kt](src/signature/SimpleText.kt)
 
      _____________
     | Hyper Skill |
-    •••••••••••••
+     •••••••••••••
 
 
 ## Stage 2/4: Star quality
