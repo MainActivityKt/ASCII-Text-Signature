@@ -1,17 +1,11 @@
 package signature
 
-import utils.Letter
-import utils.Symbol.*
-import utils.TWO_SPACES
-import utils.getInput
+import utils.*
 import java.util.Scanner
 
 enum class Row {
     TOP, MIDDLE, BOTTOM
 }
-
-private const val MID_SPACE_SIZE = 6
-
 class TextDecorator(private val name: String, private val title: String) {
     private val firstName = name.split(' ').first()
     private val lastName = name.split(' ').last()
@@ -34,19 +28,19 @@ class TextDecorator(private val name: String, private val title: String) {
 
     private fun decorateRow(row: Row): StringBuilder {
         val str = StringBuilder()
-        str.append(STAR.value)
+        str.append(ASTERISK)
         val text = StringBuilder().apply {
             firstName.forEachIndexed { index, c ->
                 append(getLetter(c, row))
                 if (index != firstName.lastIndex) {
-                    append(SPACE.value)
+                    append(SPACE)
                 }
             }
             append(" ".repeat(MID_SPACE_SIZE))
             lastName.forEachIndexed { index, c ->
                 append(getLetter(c, row))
                 if (index != lastName.lastIndex) {
-                    append(SPACE.value)
+                    append(SPACE)
                 }
             }
         }
@@ -55,10 +49,10 @@ class TextDecorator(private val name: String, private val title: String) {
             str.append(text)
             str.append(TWO_SPACES)
         } else {
-            str.append(SPACE.value.repeat(lineLength - 2))
+            str.append(SPACE.repeat(lineLength - 2))
             str.replace(midIndex, midIndex + decoratedNameLength, text.toString())
         }
-        str.append(STAR.value)
+        str.append(ASTERISK)
         return str
     }
 
@@ -73,19 +67,19 @@ class TextDecorator(private val name: String, private val title: String) {
     }
 
     private fun getDecorators(): String {
-        return STAR.value.repeat(lineLength)
+        return ASTERISK.repeat(lineLength)
     }
 
     private fun getTitleRow(): StringBuilder {
         return StringBuilder().apply {
-            append(STAR.value)
+            append(ASTERISK)
             if (name.length > title.length) {
-                append(SPACE.value.repeat(lineLength - 2))
+                append(SPACE.repeat(lineLength - 2))
                 replace(midIndex, midIndex + title.length, title)
             } else {
                 append(TWO_SPACES + title + TWO_SPACES)
             }
-            append(STAR.value)
+            append(ASTERISK)
         }
     }
 
@@ -104,13 +98,16 @@ class TextDecorator(private val name: String, private val title: String) {
         decoratedNameLength += spaces
 
         return (if (name.length > title.length) decoratedNameLength else title.length) +
-                (TWO_SPACES.length * 2) + (STAR.value.length * 2)
+                (TWO_SPACES.length * 2) + (ASTERISK.length * 2)
     }
 }
 
 fun main() {
     val sc = Scanner(System.`in`)
+
     val fullName = getInput(sc, "Enter name and surname").uppercase()
     val title = getInput(sc, "Enter person's status")
+
     println(TextDecorator(fullName, title).decorateText())
+    sc.close()
 }

@@ -10,4 +10,6 @@ fun getInput(sc: Scanner, message: String): String {
 const val TWO_SPACES = "  "
 const val BORDER = "8"
 const val SPACE = " "
+const val ASTERISK = "*"
 const val MID_SPACE_SIZE = 6
+

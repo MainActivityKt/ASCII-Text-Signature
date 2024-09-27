@@ -10,7 +10,8 @@ class FancyTextDecorator(
     mediumFontDir: File,
     romanFontDir: File,
 ) {
-    private val mediumFont = mutableMapOf<String, Font>()   // Map of letter to Font
+    // Maps of letter to that letter's font
+    private val mediumFont = mutableMapOf<String, Font>()
     private val romanFont = mutableMapOf<String, Font>()
 
     init {
@@ -68,7 +69,7 @@ class FancyTextDecorator(
         val text = buildString {
             name.forEach { c ->
                 val str = c.toString()
-                append(if (str == SPACE) SPACE.repeat(10) else romanFont[c.toString()]!!.value[index])
+                append(if (str == SPACE) SPACE.repeat(10) else romanFont[c.toString()]!!.structure[index])
             }
         }
         if (name.length > title.length) {
@@ -91,7 +92,7 @@ class FancyTextDecorator(
         val text = buildString {
             title.forEach{ c ->
                 val str = c.toString()
-                append(if (str == SPACE) SPACE.repeat(5) else mediumFont[c.toString()]!!.value[index])
+                append(if (str == SPACE) SPACE.repeat(5) else mediumFont[c.toString()]!!.structure[index])
             }
         }
         return buildString {
